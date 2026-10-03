@@ -1,25 +1,44 @@
 import random
 import PlayerHand
 import DealerHand
-
-class Cards:
-    CARD_BUCKET = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
+import Cards
+import CurrentHand
 
 class Game:
-    def startHand(self):
-        self.player = PlayerHand.PlayerHand()
-        self.dealer = DealerHand.DealerHand()
-
-        for i in range(2):
-            self.player.playerCards.append(self.dealCard())
-            self.dealer.dealerCards.append(self.dealCard())
-
     def dealCard(self):
-        return random.choice(Cards.CARD_BUCKET)
+        return random.choice(Cards.Cards.CARD_BUCKET)
+
+    def checkIfBust(self, player):
+        if(player.playerTotal > 21):
+            if player.numberOfAces > 0:
+                self.changeAces(player)
+            else:
+                return True
+        else:
+            return False
+
+    def changeAces(self, player):
+        for index, card in enumerate(player.playerCards):
+            if (card == 11):
+                player.playerCards[index] = 1
+                player.numberOfAces -= 1
+                break
+        
+        self.checkIfBust(player)
+                
+
 
 game = Game()
 
-game.startHand()
+while True:
+    currentHand = CurrentHand.CurrentHand(game.dealCard, game.checkIfBust)
+    currentHand.startHand()
 
+    print(currentHand.player.playerTotal > currentHand.dealer.dealerTotal)
+    print(f"{currentHand.player.playerTotal} : {currentHand.dealer.dealerTotal}")
 
-print( f"{game.player.playerTotal > game.dealer.dealerTotal}")
+    print ("Play again? Y/N")
+    playAgain = input()
+
+    if (playAgain != "Y"):
+        break
