@@ -1,9 +1,11 @@
 class PlayerHand:
     def __init__(self):
-        self._playerTotal = 0
+        self.name = "player"
+        self._total = 0
         self.playerCards = []
         self.numberOfAces = 0
+        self.isBust = False
 
     @property
-    def playerTotal(self):
+    def total(self):
         return sum(self.playerCards)
