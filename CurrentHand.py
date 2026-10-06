@@ -80,11 +80,12 @@ class CurrentHand:
                     self.givePlayerCard()
                 case "S":
                     self.dealerTurn
-                    return
+                    break
                 case "P":
-                    self.player.playerCards = self.Splitting.splitHand(self.player.playerCards)
-                    print(f"Your Cards: {self.player.playerCards}")
-                    print(f"Dealer Cards: {self.dealer.dealerCards}")  
+                    self.player.playerCards = self.Splitting.splitHand(self.player.playerCards)  
+
+        self.dealerTurn()
+
     #
     # Prompts the user for a decision to hit or stand
     #
@@ -92,6 +93,8 @@ class CurrentHand:
         #Escapes when the player has decided to hit or stand
         while True:
             #Shows the player their total
+            print(f"Your Cards: {self.player.playerCards}")
+            print(f"Dealer Cards: {self.dealer.dealerCards}")
             print(f"Your total is {self.player.total}")
             #Prompts to player to hit or stand
             print("H or S")
